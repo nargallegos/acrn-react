@@ -278,9 +278,8 @@ class App extends Component {
                     <div className="container">
                         <div className="navbar-header navbar-right">
                             <ul className="nav navbar-nav">
-                                <li><a href="http://github.com/generalfuzz/acrn-react">Source</a></li>
-                                <li><a href="http://generalfuzz.net/contact.php">Contact</a></li>
-                                <li><a href="http://www.generalfuzz.net">Music</a></li>
+                                <li><a href="https://github.com/nargallegos/acrn-react">Source</a></li>
+                                <li><a href="https://cele.rocks/"Blog</a></li>
 
                             </ul>
                         </div>
