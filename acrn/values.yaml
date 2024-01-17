@@ -2,11 +2,26 @@ replicaCount: 1
 
 image:
   repository: cele/acrn
-  tag: latest
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: ""
 
 service:
+  type: ClusterIP
   port: 80
   targetPort: 3000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+  hosts: []
+  tls: []
 
 resources:
   requests:
@@ -16,15 +31,9 @@ resources:
     memory: "256Mi"
     cpu: "250m"
 
-ingress:
+autoscaling:
   enabled: false
-  annotations: {}
-  hosts:
-    - host: "example.com"
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls:
-    - hosts:
-        - "example.com"
-      secretName: example-tls
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
