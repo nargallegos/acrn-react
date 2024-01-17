@@ -38,4 +38,3 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
 
 # Add other values like nodeSelector, tolerations, affinity if needed
-
