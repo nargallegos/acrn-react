@@ -3,12 +3,12 @@ entries:
   acrn:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-01-17T16:19:39.29131508-05:00"
+    created: "2024-01-17T16:23:25.216014074-05:00"
     description: A Helm chart for Kubernetes
-    digest: 81cbbe3573ad44f4465cd27e76a14b739d8c62e671d0e57f3354dcf36443d8f9
+    digest: 4e3b86e28e819288a2138ee086034f0fe4f562919f0f3c9f2dd751181b0f816b
     name: acrn
     type: application
     urls:
     - https://nargallegos.github.io/acrn-react/acrn-0.1.0.tgz
     version: 0.1.0
-generated: "2024-01-17T16:19:39.290443424-05:00"
+generated: "2024-01-17T16:23:25.215269711-05:00"
