@@ -1,0 +1,40 @@
+replicaCount: 1
+
+image:
+  repository: cele/acrn
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+  hosts: []
+  tls: []
+
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "125m"
+  limits:
+    memory: "256Mi"
+    cpu: "250m"
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+# Add other values like nodeSelector, tolerations, affinity if needed
