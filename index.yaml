@@ -3,12 +3,12 @@ entries:
   myapp:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-01-17T13:26:14.364350603-05:00"
+    created: "2024-01-17T14:27:50.329676909-05:00"
     description: A Helm chart for Kubernetes
-    digest: 620f960ea973ab2d427970a2d4f7e8888bfcd812668ad418ac34ccab2510ec18
+    digest: 097a779c1ca28896fb3fc8a6a732f5f51dff7e29426453b1fda6003077736281
     name: myapp
     type: application
     urls:
     - https://nargallegos.github.io/acrn-react/myapp-0.1.0.tgz
     version: 0.1.0
-generated: "2024-01-17T13:26:14.363394273-05:00"
+generated: "2024-01-17T14:27:50.328925748-05:00"
