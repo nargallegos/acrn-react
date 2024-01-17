@@ -279,7 +279,7 @@ class App extends Component {
                         <div className="navbar-header navbar-right">
                             <ul className="nav navbar-nav">
                                 <li><a href="https://github.com/nargallegos/acrn-react">Source</a></li>
-                                <li><a href="https://cele.rocks/"Blog</a></li>
+                                <li><a href="https://cele.rocks/">Blog</a></li>
 
                             </ul>
                         </div>
@@ -290,7 +290,7 @@ class App extends Component {
                         <h1 className="App-title">ACRN Tinnitus Protocol</h1>
                     </div>
                     <p>This is my attempt at implementing the <a
-                        href="https://www.thetinnitusclinic.co.uk/tinnitus-treatment/acoustic-neuromodulation/">Acoustic Coordinated Reset
+                        href="https://www.thetinnitusclinic.co.uk/about-tinnitus/ntr-technology">Acoustic Coordinated Reset
                         Neuromodulation</a> tinnitus treatment protocol
                         using <a
                             href="https://www.tinnitustalk.com/attachments/tass-et-al_rnn-2012_counteracting-tinnitus-by-acoustic-cr-neuromodulation-pdf.183/">this
@@ -307,8 +307,8 @@ class App extends Component {
                         </ul>
                     </div>
                     <p>Inspired by <a
-                        href="http://www.tinnitustalk.com/threads/acoustic-cr%C2%AE-neuromodulation-do-it-yourself-guide.1469/">this</a> thread on <a href="http://www.tinnitustalk.com">tinnitustalk.com</a> and <a
-                            href="http://www.reddit.com/r/tinnitus/comments/15x99f/recent_tinnitus_study_and_my_attempt_at_utilizing/">this</a> reddit thread.</p>
+                        href="https://www.tinnitustalk.com/threads/acoustic-cr%C2%AE-neuromodulation-do-it-yourself-guide.1469/">this</a> thread on <a href="http://www.tinnitustalk.com">tinnitustalk.com</a> and <a
+                            href="https://www.reddit.com/r/tinnitus/comments/15x99f/recent_tinnitus_study_and_my_attempt_at_utilizing/">this</a> reddit thread.</p>
                     <br/>
                     <div>
                         <ToggleButtonGroup type="radio" name="options"
