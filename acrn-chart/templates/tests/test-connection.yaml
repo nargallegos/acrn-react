@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ["{{ .Values.ingress.hostname }}:3000"]
+      args: ['{{ .Values.ingress.host }}:3000']
   restartPolicy: Never
