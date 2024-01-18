@@ -1,0 +1,10 @@
+image:
+  repository: cele/acrn
+  tag: latest
+  pullPolicy: IfNotPresent
+
+ingress:
+  host: # hostname
+  secretName: # TLS secret name
+
+replicaCount: 1

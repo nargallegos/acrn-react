@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: acrn-service
+  namespace: acrn
+spec:
+  selector:
+    app: acrn
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

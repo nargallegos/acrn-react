@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-acrn
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}-acrn
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-acrn
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-acrn
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-acrn
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "125m"
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
