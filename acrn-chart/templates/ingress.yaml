@@ -1,23 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: acrn-ingress
-  namespace: acrn
+  name: {{ .Release.Name }}-ingress
+  namespace: {{ .Release.Namespace }}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   tls:
   - hosts:
-    - # Replace with your domain
-    secretName: # Replace with your secret name
+    - {{ .Values.ingress.host }}
+    secretName: {{ .Values.ingress.secretName }} 
   rules:
-  - host: # Replace with your domain
+  - host: {{ .Values.ingress.host }}
     http:
       paths:
       - path: /
         pathType: ImplementationSpecific
         backend:
           service:
-            name: acrn-service
+            name: {{ .Release.Name }}-service
             port:
               number: 80

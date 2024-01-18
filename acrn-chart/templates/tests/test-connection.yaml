@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "acrn.fullname" . }}-test-connection"
+  name: {{ .Release.Name }}-test-connection
   labels:
-    {{- include "acrn.labels" . | nindent 4 }}
+    {{ .Release.Name }}-acrn
   annotations:
     "helm.sh/hook": test
 spec:
@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "acrn.fullname" . }}:{{ .Values.service.port }}']
+      args: ["{{ .Values.ingress.hostname }}:3000"]
   restartPolicy: Never
