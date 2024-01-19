@@ -1,1 +1,1 @@
-An implementation of ACRN tinnitus procotol in React.
+Helm charts for ACRN.
