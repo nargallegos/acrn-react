@@ -33,7 +33,8 @@
 
 ## 📅 Backlog
 - [ ] Refactor Code into Python
-
+- [ ] Get demo ready
+ 
 ---
 
 ## 🚧 Blockers/Challenges
