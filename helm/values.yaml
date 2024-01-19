@@ -4,8 +4,7 @@ image:
   pullPolicy: IfNotPresent
 
 ingress:
-  host: "acrn.mil.intellibridgelabs.io"
-  secretName: tls-acrn-ingress
+  host: # hostname
+  secretName: # TLS secret name
 
 replicaCount: 1
-

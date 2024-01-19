@@ -8,10 +8,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - acrn.mil.intellibridgelabs.io
-    secretName: tls-acrn-ingress 
+    - # hostname
+    secretName: # secret name 
   rules:
-  - host: acrn.mil.intellibridgelabs.io
+  - host: #hostname
     http:
       paths:
       - path: /
