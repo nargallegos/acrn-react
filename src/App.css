@@ -44,3 +44,7 @@
   background-color: #eee1bb !important;
   padding: 0.5em 0.6em;
 }
+
+[type='radio'] {
+  display: none; 
+}
