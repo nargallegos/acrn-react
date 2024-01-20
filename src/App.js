@@ -9,12 +9,14 @@ import 'rc-slider/assets/index.css';
 
 import {Button, ToggleButton, ToggleButtonGroup} from 'react-bootstrap';
 
-import Tone from 'tone';
+import * as Tone from 'tone';
 import StartAudioContext from 'startaudiocontext';
 
 class App extends Component {
-    constructor(props, context) {
-        super(props, context);
+    //static contextType = context; // replace MyContext with your actual context
+
+    constructor(props) {
+        super(props);
 
 
         // use local storage for volume and frequency
@@ -40,7 +42,7 @@ class App extends Component {
             isPlaying: false,
             userStarted: false,
             playButtonText: buttonText,
-            synth: new Tone.PolySynth(6, Tone.Synth, {
+            synth: new Tone.PolySynth(Tone.Synth, {
                 "oscillator": {
                     "type": "sine"
                 },
@@ -50,10 +52,10 @@ class App extends Component {
                     "sustain": 0.07,
                     "release": 0.08,
                 }
-            }).toMaster(),
+            }).toDestination(),
             osc: new Tone.Oscillator({
                 "frequency": constants.DEFAULT_FREQ
-            }).toMaster()
+            }).toDestination()
         }
     }
 
@@ -70,10 +72,12 @@ class App extends Component {
     componentDidMount = () => {
         //set the bpm and initialize sound context
         Tone.Transport.bpm.value = 90 * 4;
-        Tone.context.latencyHint = 'interactive';
+        const context = new Tone.Context({
+            latencyHint: 'interactive',
+        });
         StartAudioContext(Tone.context, '.App');
         // make sure volume is off initially
-        Tone.Master.volume.rampTo(-Infinity, 0.05);
+        Tone.Destination.volume.rampTo(-Infinity, 0.05);
     };
 
     handleTextFreqChange = (e) => {
@@ -101,9 +105,9 @@ class App extends Component {
         let {isPlaying, volume, playState} = this.state;
         if (!isPlaying) {
             Tone.Transport.start();
-            Tone.Master.volume.rampTo(volume, 0.05);
+            Tone.Destination.volume.rampTo(volume, 0.05);
         } else {
-            Tone.Master.volume.rampTo(-Infinity, 0.05);
+            Tone.Destination.volume.rampTo(-Infinity, 0.05);
             Tone.Transport.stop();
         }
         this.updatePlayState(!isPlaying, playState);
@@ -143,7 +147,7 @@ class App extends Component {
                 case constants.PLAYER_STATES.PLAY_ACRN:
                     this.setState({playButtonText: constants.STOP_SEQ_TEXT,
                     enableSlider: false});
-                    Tone.Master.volume.rampTo(volume, 0.1);
+                    Tone.Destination.volume.rampTo(volume, 0.1);
                     this.playAcrn();
                     break;
                 case constants.PLAYER_STATES.PLAY_TONE:
@@ -247,7 +251,7 @@ class App extends Component {
 
     handleVolumeChange = (event) => {
         let volume = event - 0.05;
-        Tone.Master.volume.rampTo(volume, 0.05);
+        Tone.Destination.volume.rampTo(volume, 0.05);
         this.setState({volume: volume});
         localStorage.setItem(constants.VOLUME_KEY, volume);
     };
