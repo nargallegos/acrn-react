@@ -3,16 +3,15 @@
   "homepage": "http://www.generalfuzz.net/acrn",
   "version": "0.1.0",
   "private": true,
-
   "dependencies": {
-    "rc-slider": "^8.6.1",
-    "rc-tooltip": "^3.7.2",
-    "react": "^16.3.2",
-    "react-bootstrap": "^0.32.1",
-    "react-dom": "^16.3.2",
-    "react-scripts": "1.1.4",
+    "rc-slider": "^10.5.0",
+    "rc-tooltip": "^6.1.3",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.10.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
     "startaudiocontext": "^1.2.1",
-    "tone": "^0.12.80"
+    "tone": "^14.7.77"
   },
   "scripts": {
     "start": "react-scripts start",
