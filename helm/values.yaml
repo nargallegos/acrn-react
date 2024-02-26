@@ -8,3 +8,4 @@ ingress:
   secretName: # TLS secret name
 
 replicaCount: 1
+
