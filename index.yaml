@@ -3,12 +3,12 @@ entries:
   acrn:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-01-18T16:34:35.758390224-05:00"
+    created: "2024-02-26T16:18:10.627918638-05:00"
     description: A Helm chart for ACRN
-    digest: aa90e090b7d59263fc396723526a21a892fef4c86adc8685486986f277dee1a8
+    digest: 65da84269ddb003573f1353be934553443c90b2042a4f64d0afb62e5167d5a01
     name: acrn
     type: application
     urls:
     - https://nargallegos.github.io/acrn-react/acrn-0.1.0.tgz
     version: 0.1.0
-generated: "2024-01-18T16:34:35.757718519-05:00"
+generated: "2024-02-26T16:18:10.627253313-05:00"
