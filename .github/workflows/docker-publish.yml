@@ -26,4 +26,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: nargallegs/acrn-react:latest
+          tags: cele/acrn-react:latest
