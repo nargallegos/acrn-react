@@ -3,7 +3,7 @@
 ## 📅 Week of 9/29/25
 
 ### 🚀 Goals for This Week
-- [ ] Convert to github actions
+- [x] Convert to github actions
 - [ ] Test deployment to AWS
 - [ ] Dark theme
 
@@ -16,7 +16,7 @@
 - [ ] Re-design blog network infrastructure
 
 #### Low Priority
-- [ ] Update README.md
+- [x] Update README.md
 
 ### ✅ Completed
 
