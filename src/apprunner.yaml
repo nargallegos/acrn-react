@@ -8,9 +8,7 @@ build:
       - npm run build
 
 run:
-  command: npm start
-  network:
-    port: 3000
+  command: npm run serve
 
 health_check:
   protocol: http
