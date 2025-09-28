@@ -9,7 +9,3 @@ build:
 
 run:
   command: npm run serve
-
-health_check:
-  protocol: http
-  path: /
