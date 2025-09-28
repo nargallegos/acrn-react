@@ -6,11 +6,13 @@ on:
       - master
     paths-ignore:
       - 'README.md'
+      - 'apprunner.yaml'
   pull_request:
     branches:
       - master    
     paths-ignore:
       - 'README.md'
+      - 'apprunner.yaml'
 
 jobs:
   build-and-push:
