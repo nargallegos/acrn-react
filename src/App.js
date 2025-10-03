@@ -309,7 +309,7 @@ class App extends Component {
                     </Container>
                 </Navbar>
                 <div className="container ">
-                    <div className={`jumbotron bg-info ${themeClass}`}>
+                    <div className={`jumbotron ${themeClass}`}>
                         <h1 className="App-title">ACRN Tinnitus Protocol</h1>
                     </div>
                     <p>This is my attempt at implementing the <a
@@ -342,7 +342,7 @@ class App extends Component {
                         </ToggleButtonGroup>
                         <br/>
                         <br/>
-                        <div className='slider'>
+                        <div className='slider' style={{position: 'relative'}}>
                             Frequency
                             <Slider
                                 min={constants.MIN_FREQ}
@@ -350,8 +350,8 @@ class App extends Component {
                                 value={freq}
                                 onChange={this.handleFreqChange}
                                 handle={this.freqSliderTooltip}
-                                disabled={!enableSlider}
                             />
+                            {!enableSlider && <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1, cursor: 'not-allowed'}}></div>}
                         </div>
                         <div>
                             <input className='freq-value' onChange={this.handleTextFreqChange} value={freq}/>

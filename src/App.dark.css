@@ -37,3 +37,14 @@ body.dark-mode .navbar-default .btn:hover {
     background-color: #555;
     color: white;
 }
+
+.dark-mode .rc-slider-rail {
+    background-color: #555;
+}
+.dark-mode .rc-slider-track {
+    background-color: #777;
+}
+.dark-mode .rc-slider-handle {
+    background-color: #ddd;
+    border-color: #777;
+}

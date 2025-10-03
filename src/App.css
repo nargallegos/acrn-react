@@ -14,10 +14,6 @@
   color: white;
 }
 
-.App-title {
-  font-size: 1.5em;
-}
-
 .App-intro {
   font-size: large;
 }
@@ -41,6 +37,12 @@
 }
 
 .jumbotron {
-  background-color: #eee1bb !important;
-  padding: 0.5em 0.6em;
+  padding: 2rem 1rem;
+  margin-bottom: 2rem;
+  background-color: #eee1bb;
+  border-radius: .3rem;
+}
+
+.jumbotron .App-title {
+  font-size: 3.5rem;
 }
