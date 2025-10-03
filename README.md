@@ -2,7 +2,11 @@
 
 This is a React-based implementation of the Acoustic Coordinated Reset (ACRN) neuromodulation tinnitus treatment protocol. The goal of this project is to provide a web-based tool for individuals to try the ACRN protocol.
 
-The live website can be found at: [https://vrvgbv7nnv.us-east-1.awsapprunner.com/](https://vrvgbv7nnv.us-east-1.awsapprunner.com/)
+The live website can be found at: [https://acrn.cele.rocks](https://acrn.cele.rocks)
+
+## Forked From
+
+This repository was originally forked from [https://github.com/headphonejames/acrn-react](https://github.com/headphonejames/acrn-react).
 
 ## What is ACRN?
 
