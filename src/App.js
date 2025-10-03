@@ -8,7 +8,7 @@ import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 
-import {Button, ToggleButton, ToggleButtonGroup} from 'react-bootstrap';
+import { Navbar, Nav, Container, Button, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 
 import Tone from 'tone';
 import StartAudioContext from 'startaudiocontext';
@@ -294,18 +294,20 @@ class App extends Component {
         const themeClass = theme === 'dark' ? 'dark-mode' : '';
         return (
             <div className={`App ${themeClass}`}>
-                <nav className={`navbar navbar-default ${themeClass}`}>
-                    <div className="container">
-                        <div className="navbar-header navbar-right">
-                            <ul className="nav navbar-nav">
-                                <li><Button onClick={this.toggleTheme}>Toggle Theme</Button></li>
-                                <li><a href="https://github.com/nargallegos/acrn-react">Source</a></li>
-                                <li><a href="https://cele.rocks/">Blog</a></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                <Navbar bg={theme} variant={theme} expand="lg" className={themeClass}>
+                    <Container>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="ms-auto">
+                                <Nav.Item>
+                                    <Button onClick={this.toggleTheme}>Toggle Theme</Button>
+                                </Nav.Item>
+                                <Nav.Link href="https://github.com/nargallegos/acrn-react">Source</Nav.Link>
+                                <Nav.Link href="https://cele.rocks/">Blog</Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
                 <div className="container ">
                     <div className={`jumbotron bg-info ${themeClass}`}>
                         <h1 className="App-title">ACRN Tinnitus Protocol</h1>
@@ -333,10 +335,10 @@ class App extends Component {
                     <br/>
                     <div>
                         <ToggleButtonGroup type="radio" name="options"
-                                           defaultValue={playState}
+                                           value={playState}
                                            onChange={this.handleRadioChange}>
-                            <ToggleButton value={constants.PLAYER_STATES.PLAY_TONE}>Tone</ToggleButton>
-                            <ToggleButton value={constants.PLAYER_STATES.PLAY_ACRN}>Sequence</ToggleButton>
+                            <ToggleButton id="tbg-radio-1" value={constants.PLAYER_STATES.PLAY_TONE}>Tone</ToggleButton>
+                            <ToggleButton id="tbg-radio-2" value={constants.PLAYER_STATES.PLAY_ACRN}>Sequence</ToggleButton>
                         </ToggleButtonGroup>
                         <br/>
                         <br/>

@@ -44,18 +44,3 @@
   background-color: #eee1bb !important;
   padding: 0.5em 0.6em;
 }
-
-.navbar-right {
-    float: right !important;
-}
-
-.nav.navbar-nav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.nav.navbar-nav > li {
-    padding-left: 10px;
-    padding-right: 10px;
-}
