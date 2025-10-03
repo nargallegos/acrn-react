@@ -9,6 +9,7 @@ export const STOP_SEQ_TEXT = "Stop Pattern";
 export const VOLUME_KEY = "volume";
 export const FREQ_KEY = "freq";
 export const PLAYER_STATE_KEY = "playerState";
+export const THEME_KEY = "theme";
 
 // initial config values
 export const DEFAULT_FREQ = 1000;
