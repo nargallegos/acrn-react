@@ -1,4 +1,5 @@
 import './App.css';
+import './App.dark.css';
 
 import React, {Component} from 'react';
 import * as constants from './constants';
@@ -7,7 +8,7 @@ import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 
-import {Button, ToggleButton, ToggleButtonGroup} from 'react-bootstrap';
+import { Navbar, Nav, Container, Button, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 
 import Tone from 'tone';
 import StartAudioContext from 'startaudiocontext';
@@ -21,6 +22,7 @@ class App extends Component {
         let localVolume = this.getLocalStorageInt(constants.VOLUME_KEY, constants.DEFAULT_VOLUME);
         let localFreq = this.getLocalStorageInt(constants.FREQ_KEY, constants.DEFAULT_FREQ);
         let playerState = this.getLocalStorageInt(constants.PLAYER_STATE_KEY, constants.PLAYER_STATES.PLAY_TONE);
+        let localTheme = localStorage.getItem(constants.THEME_KEY) || 'light';
 
         let buttonText = constants.PLAY_TONE_TEXT;
         if (playerState === constants.PLAYER_STATES.PLAY_ACRN) {
@@ -40,6 +42,7 @@ class App extends Component {
             isPlaying: false,
             userStarted: false,
             playButtonText: buttonText,
+            theme: localTheme,
             synth: new Tone.PolySynth(6, Tone.Synth, {
                 "oscillator": {
                     "type": "sine"
@@ -74,6 +77,22 @@ class App extends Component {
         StartAudioContext(Tone.context, '.App');
         // make sure volume is off initially
         Tone.Master.volume.rampTo(-Infinity, 0.05);
+        this.updateTheme(this.state.theme);
+    };
+
+    toggleTheme = () => {
+        const newTheme = this.state.theme === 'light' ? 'dark' : 'light';
+        this.setState({ theme: newTheme });
+        localStorage.setItem(constants.THEME_KEY, newTheme);
+        this.updateTheme(newTheme);
+    };
+
+    updateTheme = (theme) => {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
     };
 
     handleTextFreqChange = (e) => {
@@ -271,22 +290,26 @@ class App extends Component {
 
 
     render = () => {
-        let {freq, enableSlider, volume, playButtonText, playState} = this.state;
+        let {freq, enableSlider, volume, playButtonText, playState, theme} = this.state;
+        const themeClass = theme === 'dark' ? 'dark-mode' : '';
         return (
-            <div className="App">
-                <nav className="navbar navbar-default">
-                    <div className="container">
-                        <div className="navbar-header navbar-right">
-                            <ul className="nav navbar-nav">
-                                <li><a href="https://github.com/nargallegos/acrn-react">Source</a></li>
-                                <li><a href="https://cele.rocks/">Blog</a></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+            <div className={`App ${themeClass}`}>
+                <Navbar bg={theme} variant={theme} expand="lg" className={themeClass}>
+                    <Container>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="ms-auto">
+                                <Nav.Item>
+                                    <Button onClick={this.toggleTheme}>Toggle Theme</Button>
+                                </Nav.Item>
+                                <Nav.Link href="https://github.com/nargallegos/acrn-react">Source</Nav.Link>
+                                <Nav.Link href="https://cele.rocks/">Blog</Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
                 <div className="container ">
-                    <div className="jumbotron bg-info">
+                    <div className={`jumbotron ${themeClass}`}>
                         <h1 className="App-title">ACRN Tinnitus Protocol</h1>
                     </div>
                     <p>This is my attempt at implementing the <a
@@ -312,14 +335,14 @@ class App extends Component {
                     <br/>
                     <div>
                         <ToggleButtonGroup type="radio" name="options"
-                                           defaultValue={playState}
+                                           value={playState}
                                            onChange={this.handleRadioChange}>
-                            <ToggleButton value={constants.PLAYER_STATES.PLAY_TONE}>Tone</ToggleButton>
-                            <ToggleButton value={constants.PLAYER_STATES.PLAY_ACRN}>Sequence</ToggleButton>
+                            <ToggleButton id="tbg-radio-1" value={constants.PLAYER_STATES.PLAY_TONE}>Tone</ToggleButton>
+                            <ToggleButton id="tbg-radio-2" value={constants.PLAYER_STATES.PLAY_ACRN}>Sequence</ToggleButton>
                         </ToggleButtonGroup>
                         <br/>
                         <br/>
-                        <div className='slider'>
+                        <div className='slider' style={{position: 'relative'}}>
                             Frequency
                             <Slider
                                 min={constants.MIN_FREQ}
@@ -327,8 +350,8 @@ class App extends Component {
                                 value={freq}
                                 onChange={this.handleFreqChange}
                                 handle={this.freqSliderTooltip}
-                                disabled={!enableSlider}
                             />
+                            {!enableSlider && <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1, cursor: 'not-allowed'}}></div>}
                         </div>
                         <div>
                             <input className='freq-value' onChange={this.handleTextFreqChange} value={freq}/>
