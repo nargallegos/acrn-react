@@ -309,7 +309,7 @@ class App extends Component {
                     </Container>
                 </Navbar>
                 <div className="container ">
-                    <div className={`jumbotron ${themeClass}`}>
+                    <div className={`jumbotron bg-info ${themeClass}`}>
                         <h1 className="App-title">ACRN Tinnitus Protocol</h1>
                     </div>
                     <p>This is my attempt at implementing the <a
