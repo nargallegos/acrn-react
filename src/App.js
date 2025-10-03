@@ -1,4 +1,5 @@
 import './App.css';
+import './App.dark.css';
 
 import React, {Component} from 'react';
 import * as constants from './constants';
@@ -21,6 +22,7 @@ class App extends Component {
         let localVolume = this.getLocalStorageInt(constants.VOLUME_KEY, constants.DEFAULT_VOLUME);
         let localFreq = this.getLocalStorageInt(constants.FREQ_KEY, constants.DEFAULT_FREQ);
         let playerState = this.getLocalStorageInt(constants.PLAYER_STATE_KEY, constants.PLAYER_STATES.PLAY_TONE);
+        let localTheme = localStorage.getItem(constants.THEME_KEY) || 'light';
 
         let buttonText = constants.PLAY_TONE_TEXT;
         if (playerState === constants.PLAYER_STATES.PLAY_ACRN) {
@@ -40,6 +42,7 @@ class App extends Component {
             isPlaying: false,
             userStarted: false,
             playButtonText: buttonText,
+            theme: localTheme,
             synth: new Tone.PolySynth(6, Tone.Synth, {
                 "oscillator": {
                     "type": "sine"
@@ -74,6 +77,22 @@ class App extends Component {
         StartAudioContext(Tone.context, '.App');
         // make sure volume is off initially
         Tone.Master.volume.rampTo(-Infinity, 0.05);
+        this.updateTheme(this.state.theme);
+    };
+
+    toggleTheme = () => {
+        const newTheme = this.state.theme === 'light' ? 'dark' : 'light';
+        this.setState({ theme: newTheme });
+        localStorage.setItem(constants.THEME_KEY, newTheme);
+        this.updateTheme(newTheme);
+    };
+
+    updateTheme = (theme) => {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
     };
 
     handleTextFreqChange = (e) => {
@@ -271,13 +290,15 @@ class App extends Component {
 
 
     render = () => {
-        let {freq, enableSlider, volume, playButtonText, playState} = this.state;
+        let {freq, enableSlider, volume, playButtonText, playState, theme} = this.state;
+        const themeClass = theme === 'dark' ? 'dark-mode' : '';
         return (
-            <div className="App">
-                <nav className="navbar navbar-default">
+            <div className={`App ${themeClass}`}>
+                <nav className={`navbar navbar-default ${themeClass}`}>
                     <div className="container">
                         <div className="navbar-header navbar-right">
                             <ul className="nav navbar-nav">
+                                <li><Button onClick={this.toggleTheme}>Toggle Theme</Button></li>
                                 <li><a href="https://github.com/nargallegos/acrn-react">Source</a></li>
                                 <li><a href="https://cele.rocks/">Blog</a></li>
 
@@ -286,7 +307,7 @@ class App extends Component {
                     </div>
                 </nav>
                 <div className="container ">
-                    <div className="jumbotron bg-info">
+                    <div className={`jumbotron bg-info ${themeClass}`}>
                         <h1 className="App-title">ACRN Tinnitus Protocol</h1>
                     </div>
                     <p>This is my attempt at implementing the <a

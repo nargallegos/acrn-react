@@ -1,0 +1,23 @@
+body.dark-mode {
+  background-color: #282c34;
+  color: white;
+}
+
+.App.dark-mode {
+  background-color: #282c34;
+  color: white;
+}
+
+.jumbotron.dark-mode {
+  background-color: #444 !important;
+  color: white;
+}
+
+.dark-mode .navbar-default {
+    background-color: #222;
+    border-color: #080808;
+}
+
+.dark-mode .navbar-default .navbar-nav > li > a {
+    color: #9d9d9d;
+}
