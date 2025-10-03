@@ -13,13 +13,24 @@ body.dark-mode {
   color: white;
 }
 
-.navbar-default.dark-mode {
-    background-color: #222;
-    border-color: #080808;
+body.dark-mode .navbar-default {
+    background-color: #222 !important;
+    border-color: #080808 !important;
 }
 
-.navbar-default.dark-mode .navbar-nav > li > a {
-    color: #9d9d9d;
+body.dark-mode .navbar-default .navbar-nav > li > a {
+    color: #9d9d9d !important;
+}
+
+body.dark-mode .navbar-default .btn {
+    background-color: #555 !important;
+    color: white !important;
+    border-color: #333 !important;
+}
+
+body.dark-mode .navbar-default .btn:hover {
+    background-color: #777 !important;
+    border-color: #555 !important;
 }
 
 .dark-mode .freq-value {
