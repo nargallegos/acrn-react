@@ -4,8 +4,8 @@
 
 ### 🚀 Goals for This Week
 - [x] Convert to github actions
-- [ ] Test deployment to AWS
-- [ ] Dark theme
+- [x] Test deployment to AWS Apprunner
+- [ ] Implement dark theme
 
 ### 📌 Tasks
 
