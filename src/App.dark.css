@@ -13,11 +13,16 @@ body.dark-mode {
   color: white;
 }
 
-.dark-mode .navbar-default {
+.navbar-default.dark-mode {
     background-color: #222;
     border-color: #080808;
 }
 
-.dark-mode .navbar-default .navbar-nav > li > a {
+.navbar-default.dark-mode .navbar-nav > li > a {
     color: #9d9d9d;
+}
+
+.dark-mode .freq-value {
+    background-color: #555;
+    color: white;
 }
