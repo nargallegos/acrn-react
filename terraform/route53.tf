@@ -4,7 +4,7 @@ data "aws_route53_zone" "selected" {
 }
 
 resource "aws_route53_record" "app_dns" {
-  zone_id = data.aws_route5y3_zone.selected.zone_id
+  zone_id = data.aws_route53_zone.selected.zone_id
   name    = var.domain_name
   type    = "CNAME"
   ttl     = 300
