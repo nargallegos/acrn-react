@@ -290,3 +290,4 @@ terraform-outputs.json
 #
 # ============================================================================
 terraform/terraform.tfvars
+terraform/.terraform.lock.hcl
