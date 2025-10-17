@@ -1,81 +1,17 @@
-# ============================================================================
-# Terraform Variables Configuration Template
-# ============================================================================
-#
-# INSTRUCTIONS:
-# 1. Copy this file: cp terraform.tfvars.example terraform.tfvars
-# 2. Fill in your actual values
-# 3. NEVER commit terraform.tfvars to git (it's in .gitignore)
-#
-# ============================================================================
+# Terraform Variables - Copy this to terraform.tfvars and fill in your values
 
-# ----------------------------------------------------------------------------
-# AWS Configuration
-# ----------------------------------------------------------------------------
+aws_region     = "us-east-1"
+app_name       = "acrn-react"
+domain_name    = "your-domain.example.com"
+hosted_zone_id = "Z1234567890ABC"  # Get with: aws route53 list-hosted-zones
 
-# AWS region where resources will be deployed
-aws_region = "us-east-1"
-
-# Application name (used for resource naming)
-app_name = "acrn-react"
-
-# Your custom domain name
-domain_name = "your-domain.example.com"
-
-# Route53 hosted zone ID for your domain
-# Get this with: aws route53 list-hosted-zones
-hosted_zone_id = "Z1234567890ABC"
-
-# ----------------------------------------------------------------------------
-# IAM Security Configuration
-# ----------------------------------------------------------------------------
-
-# External ID for secure role assumption (prevents confused deputy attacks)
-# Use a unique, hard-to-guess value
-# Example: Generate with: echo "terraform-deploy-$(openssl rand -hex 8)"
+# Security: External ID for role assumption
 terraform_deploy_external_id = "terraform-deploy-acrn"
 
-# ----------------------------------------------------------------------------
-# Terraform State Backend (Optional - Recommended for Teams)
-# ----------------------------------------------------------------------------
-
-# S3 bucket for Terraform state storage
-# Leave empty to use local state
-# Example: "my-terraform-state-bucket"
+# Optional: For remote state (recommended for teams)
 terraform_state_bucket = ""
+terraform_lock_table   = ""
 
-# DynamoDB table for Terraform state locking
-# Leave empty if not using remote state
-# Example: "terraform-state-locks"
-terraform_lock_table = ""
-
-# ----------------------------------------------------------------------------
-# GitHub Actions OIDC Configuration (Optional - For CI/CD)
-# ----------------------------------------------------------------------------
-
-# Enable GitHub Actions OIDC provider and role (no secrets needed!)
-# Set to true if you want to deploy via GitHub Actions
+# Optional: Enable GitHub Actions OIDC (no secrets!)
 enable_github_actions_oidc = false
-
-# GitHub repository in format "owner/repository"
-# Required if enable_github_actions_oidc is true
-# Example: "yourusername/acrn-react"
-github_repo = ""
-
-# ============================================================================
-# SECURITY NOTES:
-# ============================================================================
-#
-# ✅ This file (terraform.tfvars) is in .gitignore and won't be committed
-# ✅ Never share this file or commit it to version control
-# ✅ Use unique external_id values for different environments
-# ✅ Rotate external_id if it's ever compromised
-# ✅ Use AWS Secrets Manager or Parameter Store for additional secrets
-#
-# For more information, see:
-# - terraform/IAM-SETUP.md
-# - terraform/GETTING-STARTED.md
-# - terraform/DEPLOYMENT.md
-#
-# ============================================================================
-
+github_repo                = ""  # e.g., "yourusername/acrn-react"
