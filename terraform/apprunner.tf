@@ -7,7 +7,7 @@ resource "aws_apprunner_service" "acrn_app" {
     }
 
     image_repository {
-      image_identifier      = "cele/acrn-react:602c73c"
+      image_identifier      = "529840040735.dkr.ecr.us-east-1.amazonaws.com/cele/acrn-react:latest"
       image_repository_type = "ECR"
       image_configuration {
         port = "3000"
