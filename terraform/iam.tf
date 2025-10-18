@@ -23,10 +23,9 @@ resource "aws_iam_role" "apprunner_ecr_access" {
   })
 
   tags = {
-    Name           = "AppRunner ECR Access Role"
-    Application    = var.app_name
-    ManagedBy      = "Terraform"
-    "last-updated" = timestamp()
+    Name        = "AppRunner ECR Access Role"
+    Application = var.app_name
+    ManagedBy   = "Terraform"
   }
 }
 
@@ -70,10 +69,9 @@ resource "aws_iam_role" "terraform_deploy" {
   max_session_duration = 3600 # 1 hour
 
   tags = {
-    Name           = "Terraform Deployment Role"
-    Application    = var.app_name
-    ManagedBy      = "Terraform"
-    "last-updated" = timestamp()
+    Name        = "Terraform Deployment Role"
+    Application = var.app_name
+    ManagedBy   = "Terraform"
   }
 }
 
@@ -266,10 +264,9 @@ resource "aws_iam_role" "github_actions" {
   max_session_duration = 3600
 
   tags = {
-    Name           = "GitHub Actions Role"
-    Application    = var.app_name
-    ManagedBy      = "Terraform"
-    "last-updated" = timestamp()
+    Name        = "GitHub Actions Role"
+    Application = var.app_name
+    ManagedBy   = "Terraform"
   }
 }
 
