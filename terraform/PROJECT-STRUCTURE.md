@@ -79,7 +79,7 @@ terraform/
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │  Hosted Zone: cele.rocks                                   │
-│    └─ CNAME with Alias: acrn-iac.cele.rocks                │
+│    └─ A record with Alias: acrn-iac.cele.rocks             │
 │       └─> Points to App Runner URL                         │
 │                                                             │
 │  Custom Domain Association:                                │
