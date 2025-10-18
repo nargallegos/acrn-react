@@ -292,7 +292,6 @@ terraform-outputs.json
 
 # Project-specific ignores
 terraform/terraform.tfvars
-terraform/.terraform.lock.hcl
 
 # Note: .terraform.lock.hcl SHOULD be committed for version consistency
 # It's already covered by the general pattern above, but explicitly NOT ignored here
