@@ -111,7 +111,8 @@ resource "aws_iam_policy" "terraform_deploy" {
           "route53:GetHostedZone",
           "route53:ListHostedZones",
           "route53:ListHostedZonesByName",
-          "route53:GetChange"
+          "route53:GetChange",
+          "route53:ListTagsForResource"
         ]
         Resource = "*"
       },
