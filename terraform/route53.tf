@@ -12,7 +12,7 @@ resource "aws_route53_record" "app_dns" {
   alias {
     name                   = aws_apprunner_service.acrn_app.service_url
     zone_id                = data.aws_apprunner_hosted_zone_id.current.id
-        evaluate_target_health = true 
+    evaluate_target_health = true
   }
 }
 

@@ -22,7 +22,7 @@ output "github_actions_role_arn" {
 # Deployment Instructions
 output "deployment_instructions" {
   description = "Instructions for deploying using the created IAM roles"
-  sensitive    = true
+  sensitive   = true
   value       = <<-EOT
     
     =================================================================
