@@ -175,7 +175,8 @@ resource "aws_iam_policy" "terraform_deploy" {
         Effect = "Allow"
         Action = [
           "iam:GetPolicy",
-          "iam:GetOpenIDConnectProvider"
+          "iam:GetOpenIDConnectProvider",
+          "iam:GetPolicyVersion"
         ]
         Resource = "*"
       },
