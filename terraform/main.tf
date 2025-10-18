@@ -5,6 +5,15 @@ terraform {
       version = "~> 5.0"
     }
   }
+
+  backend "s3" {
+    bucket         = "tf-state-acrn-dev"
+    key            = "acrn-react/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "tf-lock-acrn"
+    use_lockfile   = true
+    encrypt        = true
+  }
 }
 
 provider "aws" {
