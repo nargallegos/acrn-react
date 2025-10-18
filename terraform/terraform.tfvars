@@ -11,5 +11,5 @@ terraform_state_bucket = "tf-state-acrn-dev"
 terraform_lock_table   = "tf-lock-acrn"
 
 # Optional: Enable GitHub Actions OIDC (no secrets!)
-enable_github_actions_oidc = false
-github_repo                = ""  # e.g., "yourusername/acrn-react"
+enable_github_actions_oidc = true
+github_repo                = "nargallegos/acrn-react"
