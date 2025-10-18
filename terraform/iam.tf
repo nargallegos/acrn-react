@@ -171,6 +171,15 @@ resource "aws_iam_policy" "terraform_deploy" {
         Resource = "*"
       },
       {
+        Sid    = "IAMReadAccess"
+        Effect = "Allow"
+        Action = [
+          "iam:GetPolicy",
+          "iam:GetOpenIDConnectProvider"
+        ]
+        Resource = "*"
+      },
+      {
         Sid    = "TerraformStateAccess"
         Effect = "Allow"
         Action = [
