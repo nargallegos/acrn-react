@@ -1,7 +1,13 @@
-aws_region     = "us-east-1"
-app_name       = "acrn-react"
-domain_name    = "cele.rocks"
-hosted_zone_id = "Z06796682YS2JSUKLK80G" # Replace with your zone ID
+# Used for the subdomain part of the URL (e.g., 'acrn'.cele.rocks)
+app_name = "acrn"
+
+# The root domain that matches your Route 53 Hosted Zone
+domain_name = "cele.rocks"
+
+# The exact name of your service in the App Runner console
+apprunner_service_name = "ACRN-React"
+
+hosted_zone_id = "Z06796682YS2JSUKLK80G"
 
 # Security: External ID for role assumption
 terraform_deploy_external_id = "terraform-deploy-acrn"

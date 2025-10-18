@@ -11,13 +11,17 @@ variable "app_name" {
 }
 
 variable "domain_name" {
-  description = "The domain name for the application."
+  description = "The custom domain name to use for the App Runner service"
   type        = string
-  default     = "acrn-iac.cele.rocks"
+}
+
+variable "apprunner_service_name" {
+  description = "The name of the App Runner service instance"
+  type        = string
 }
 
 variable "hosted_zone_id" {
-  description = "The ID of the hosted zone for the domain."
+  description = "The Route56 hosted zone ID for the custom domain"
   type        = string
 }
 
