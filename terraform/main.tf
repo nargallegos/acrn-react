@@ -11,7 +11,6 @@ terraform {
     key            = "acrn-react/terraform.tfstate"
     region         = "us-east-1"
     dynamodb_table = "tf-lock-acrn"
-    use_lockfile   = true
     encrypt        = true
   }
 }
