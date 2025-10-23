@@ -92,14 +92,11 @@ jobs:
           terraform plan -no-color -var-file="$VAR_FILE"
 
       - name: Terraform Apply
-        if: (github.ref_name == 'master' || github.ref_name == 'develop') && github.event_name == 'push'
+        if: github.ref_name == 'master' && github.event_name == 'push'
         working-directory: ${{ env.TERRAFORM_DIR }}
         run: |
-          VAR_FILE="dev.tfvars"
-          if [[ "${{ github.ref_name }}" == "master" ]]; then
-            VAR_FILE="prod.tfvars"
-          fi
-          terraform apply -auto-approve -var-file="$VAR_FILE"
+          # The var file is always prod.tfvars in the apply step
+          terraform apply -auto-approve -var-file="prod.tfvars"
 
 # ============================================================================
 # Setup Instructions:
