@@ -17,6 +17,6 @@ resource "aws_route53_record" "app_dns" {
 }
 
 resource "aws_apprunner_custom_domain_association" "acrn_domain" {
-  domain_name = var.domain_name
+  domain_name = "${var.app_name}.${var.root_domain_name}"
   service_arn = aws_apprunner_service.acrn_app.arn
 }

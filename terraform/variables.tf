@@ -57,3 +57,9 @@ variable "github_repo" {
   type        = string
   default     = ""
 }
+
+variable "root_domain_name" {
+  description = "Root domain name"
+  type        = string
+  default     = ""
+}
