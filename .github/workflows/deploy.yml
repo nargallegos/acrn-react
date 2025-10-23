@@ -1,16 +1,17 @@
 # Example GitHub Actions workflow for deploying to AWS App Runner
 # Using OIDC (OpenID Connect) - No AWS credentials stored in GitHub!
 
-name: Deploy to AWS App Runner
+name: Deploy Infrastructure to AWS App Runner
 
 on:
   push:
     branches:
-      - main
-      - iac
+      - master
+      - develop
   pull_request:
     branches:
-      - main
+      - master
+      - develop
   workflow_dispatch:
 
 # Required for OIDC authentication
@@ -23,10 +24,14 @@ env:
   TERRAFORM_DIR: terraform
 
 jobs:
-  terraform-plan:
-    name: Terraform Plan
+  terraform:
+    name: Terraform Plan/Apply
     runs-on: ubuntu-latest
     
+    # Use GitHub Environments to securely manage prod/dev secrets
+    environment:
+      name: ${{ github.ref == 'refs/heads/master' && 'prod' || github.ref == 'refs/heads/develop' && 'dev' }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,12 +39,9 @@ jobs:
       - name: Configure AWS credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }} # Uses the secret from the GitHub Environment
           aws-region: ${{ env.AWS_REGION }}
-          role-session-name: GitHubActions-TerraformPlan
-
-      - name: Verify AWS identity
-        run: aws sts get-caller-identity
+          role-session-name: GitHubActions-Terraform
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -50,11 +52,9 @@ jobs:
         id: init
         working-directory: ${{ env.TERRAFORM_DIR }}
         run: |
-          WORKSPACE="default"
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
+          WORKSPACE="dev" # Default to dev
+          if [[ "${{ github.ref_name }}" == "master" ]]; then
             WORKSPACE="prod"
-          elif [[ "${{ github.ref_name }}" == "develop" ]]; then
-            WORKSPACE="dev"
           fi
 
           terraform init \
@@ -67,12 +67,12 @@ jobs:
         id: workspace
         working-directory: ${{ env.TERRAFORM_DIR }}
         run: |
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
+          if [[ "${{ github.ref_name }}" == "master" ]]; then
             terraform workspace select prod
-          elif [[ "${{ github.ref_name }}" == "develop" ]]; then
+          else
             terraform workspace select dev
           fi
-
+      
       - name: Terraform Format Check
         working-directory: ${{ env.TERRAFORM_DIR }}
         run: terraform fmt -check
@@ -85,70 +85,21 @@ jobs:
         id: plan
         working-directory: ${{ env.TERRAFORM_DIR }}
         run: |
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
-            terraform plan -no-color -var-file="prod.tfvars"
-          elif [[ "${{ github.ref_name }}" == "develop" ]]; then
-            terraform plan -no-color -var-file="dev.tfvars"
+          VAR_FILE="dev.tfvars"
+          if [[ "${{ github.ref_name }}" == "master" ]]; then
+            VAR_FILE="prod.tfvars"
           fi
-        continue-on-error: true
-
-  terraform-apply:
-    name: Terraform Apply
-    runs-on: ubuntu-latest
-    needs: terraform-plan
-    # Only run on main branch and not on pull requests
-    if: (github.ref_name == 'main' || github.ref_name == 'develop') && github.event_name == 'push'
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Configure AWS credentials using OIDC
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
-          role-session-name: GitHubActions-TerraformApply
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.5.0
-
-      - name: Terraform Init and Select Workspace
-        working-directory: ${{ env.TERRAFORM_DIR }}
-        run: |
-          WORKSPACE="default"
-          VAR_FILE=""
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
-            WORKSPACE="prod"
-          elif [[ "${{ github.ref_name }}" == "develop" ]]; then
-            WORKSPACE="dev"
-          fi
-
-          terraform init \
-            -backend-config="bucket=tf-state-acrn-dev" \
-            -backend-config="key=${WORKSPACE}/terraform.tfstate" \
-            -backend-config="region=${{ env.AWS_REGION }}" \
-            -backend-config="dynamodb_table=tf-lock-acrn"
-
-          terraform workspace select $WORKSPACE
+          terraform plan -no-color -var-file="$VAR_FILE"
 
       - name: Terraform Apply
+        if: (github.ref_name == 'master' || github.ref_name == 'develop') && github.event_name == 'push'
         working-directory: ${{ env.TERRAFORM_DIR }}
         run: |
-          VAR_FILE=""
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
-            VAR_FILE="-var-file=prod.tfvars"
-          elif [[ "${{ github.ref_name }}" == "develop" ]]; then
-            VAR_FILE="-var-file=dev.tfvars"
+          VAR_FILE="dev.tfvars"
+          if [[ "${{ github.ref_name }}" == "master" ]]; then
+            VAR_FILE="prod.tfvars"
           fi
-          
-          terraform apply -auto-approve $VAR_FILE
-
-      - name: Output App URL
-        working-directory: ${{ env.TERRAFORM_DIR }}
-        run: terraform output app_url
+          terraform apply -auto-approve -var-file="$VAR_FILE"
 
 # ============================================================================
 # Setup Instructions:
