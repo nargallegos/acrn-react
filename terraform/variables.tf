@@ -20,6 +20,12 @@ variable "apprunner_service_name" {
   type        = string
 }
 
+variable "environment" {
+      description = "The deployment environment name (e.g., dev, prod)"
+      type        = string
+      default     = "dev"
+    }
+
 variable "hosted_zone_id" {
   description = "The Route56 hosted zone ID for the custom domain"
   type        = string

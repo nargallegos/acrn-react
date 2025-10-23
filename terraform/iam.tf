@@ -224,8 +224,13 @@ resource "aws_iam_role_policy_attachment" "terraform_deploy" {
 # ----------------------------------------------------------------------------
 # 3. OIDC Provider for GitHub Actions (Optional - for CI/CD)
 # ----------------------------------------------------------------------------
+data "aws_iam_openid_connect_provider" "github_actions" {
+  url = "https://token.actions.githubusercontent.com"
+}
+
 resource "aws_iam_openid_connect_provider" "github_actions" {
-  count = var.enable_github_actions_oidc ? 1 : 0
+  # Only create this resource if the data source returns null (it doesn't exist)
+  count = data.aws_iam_openid_connect_provider.github_actions.arn == null ? 1 : 0
 
   url = "https://token.actions.githubusercontent.com"
 
@@ -257,15 +262,20 @@ resource "aws_iam_role" "github_actions" {
       {
         Effect = "Allow"
         Principal = {
-          Federated = aws_iam_openid_connect_provider.github_actions[0].arn
+          # Use the ARN from the data source if it exists.
+          # If not, use the ARN from the newly created resource (if it was created).
+          Federated = length(aws_iam_openid_connect_provider.github_actions) > 0 ? aws_iam_openid_connect_provider.github_actions[0].arn : data.aws_iam_openid_connect_provider.github_actions.arn
         }
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-          }
+          },
+          # Restrict to the specific branch for the environment
+          # Prod role can only be used by the 'master' branch
+          # Dev role can only be used by the 'develop' branch
           StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:${var.github_repo}:*"
+            "token.actions.githubusercontent.com:sub" = "repo:${var.github_repo}:ref:refs/heads/${var.environment == "prod" ? "master" : "develop"}"
           }
         }
       }
