@@ -1,19 +1,17 @@
-name: Deploy Infrastructure to AWS App Runner
+name: Deploy Production to AWS App Runner
 
 on:
   push:
     branches:
       - master
-      - develop
   pull_request:
     branches:
       - master
-      - develop
   workflow_dispatch:
 
 permissions:
-  id-token: write   # Allows the workflow to request an OIDC token
-  contents: read    # Allows reading the repository contents
+  id-token: write
+  contents: read
 
 env:
   AWS_REGION: us-east-1
@@ -21,12 +19,11 @@ env:
 
 jobs:
   terraform:
-    name: Terraform Plan/Apply
+    name: Terraform Plan/Apply (Production)
     runs-on: ubuntu-latest
     
-    # Use GitHub Environments to securely manage prod/dev secrets
     environment:
-      name: ${{ (github.ref == 'refs/heads/master' || github.base_ref == 'master') && 'prod' || 'dev' }}
+      name: prod
 
     steps:
       - name: Checkout code
@@ -35,39 +32,27 @@ jobs:
       - name: Configure AWS credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }} # Uses the secret from the GitHub Environment
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
-          role-session-name: GitHubActions-Terraform
+          role-session-name: GitHubActions-Terraform-Prod
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.0
 
-      - name: Terraform Init
-        id: init
+      - name: Terraform Init (Production)
         working-directory: ${{ env.TERRAFORM_DIR }}
         run: |
-          WORKSPACE="dev" # Default to dev
-          if [[ "${{ github.ref_name }}" == "master" || "${{ github.base_ref }}" == "master" ]]; then
-            WORKSPACE="prod"
-          fi
-
           terraform init \
             -backend-config="bucket=tf-state-acrn-dev" \
-            -backend-config="key=${WORKSPACE}/terraform.tfstate" \
+            -backend-config="key=prod/terraform.tfstate" \
             -backend-config="region=${{ env.AWS_REGION }}" \
             -backend-config="dynamodb_table=tf-lock-acrn"
 
       - name: Select Terraform Workspace
-        id: workspace
         working-directory: ${{ env.TERRAFORM_DIR }}
-        run: |
-          if [[ "${{ github.ref_name }}" == "master" || "${{ github.base_ref }}" == "master" ]]; then
-            terraform workspace select prod
-          else
-            terraform workspace select dev
-          fi
+        run: terraform workspace select prod
       
       - name: Terraform Format Check
         working-directory: ${{ env.TERRAFORM_DIR }}
@@ -78,14 +63,8 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        id: plan
         working-directory: ${{ env.TERRAFORM_DIR }}
-        run: |
-          VAR_FILE="dev.tfvars"
-          if [[ "${{ github.ref_name }}" == "master" || "${{ github.base_ref }}" == "master" ]]; then
-            VAR_FILE="prod.tfvars"
-          fi
-          terraform plan -no-color -var-file="$VAR_FILE"
+        run: terraform plan -no-color -var-file="prod.tfvars"
 
       - name: Terraform Apply
         if: github.ref_name == 'master' && github.event_name == 'push'
