@@ -262,20 +262,14 @@ resource "aws_iam_role" "github_actions" {
       {
         Effect = "Allow"
         Principal = {
-          # Use the ARN from the data source if it exists.
-          # If not, use the ARN from the newly created resource (if it was created).
           Federated = coalesce(data.aws_iam_openid_connect_provider.github_actions.arn, try(aws_iam_openid_connect_provider.github_actions[0].arn, null))
         }
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
-            "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-          },
-          # Restrict to the specific branch for the environment
-          # Prod role can only be used by the 'master' branch
-          # Dev role can only be used by the 'develop' branch
-          StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:${var.github_repo}:ref:refs/heads/${var.environment == "prod" ? "master" : "develop"}"
+            "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com",
+            # Securely restrict to the repository and the specific GitHub Environment
+            "token.actions.githubusercontent.com:sub" = "repo:${var.github_repo}:environment:${var.environment}"
           }
         }
       }
