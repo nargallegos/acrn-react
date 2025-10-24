@@ -36,6 +36,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Get OIDC Token Subject
+        uses: actions/github-script@v6
+        id: get_token_subject
+        with:
+          script: |
+            const core = require('@actions/core');
+            const idToken = await core.getIDToken();
+            const payload = JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString());
+            core.setOutput('subject', payload.sub);
+      - name: Display OIDC Token Subject
+        run: echo "OIDC Subject: ${{ steps.get_token_subject.outputs.subject }}"
+
       - name: Configure AWS credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
