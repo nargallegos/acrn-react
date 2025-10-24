@@ -224,13 +224,23 @@ resource "aws_iam_role_policy_attachment" "terraform_deploy" {
 # ----------------------------------------------------------------------------
 # 3. OIDC Provider for GitHub Actions (Optional - for CI/CD)
 # ----------------------------------------------------------------------------
+data "aws_iam_openid_connect_provider" "github_actions" {
+  url = "https://token.actions.githubusercontent.com"
+}
+
 resource "aws_iam_openid_connect_provider" "github_actions" {
-  count = var.enable_github_actions_oidc ? 1 : 0
+  # Only create this resource if the data source returns null (it doesn't exist)
+  count = var.enable_github_actions_oidc && data.aws_iam_openid_connect_provider.github_actions.arn == null ? 1 : 0
 
   url = "https://token.actions.githubusercontent.com"
 
   client_id_list = [
     "sts.amazonaws.com"
+  ]
+
+  thumbprint_list = [
+    "6938fd4d98bab03faadb97b34396831e3780aea1",
+    "1c58a3a8518e8759bf075b76b750d4f2df264fcd"
   ]
 
   tags = {
@@ -252,7 +262,9 @@ resource "aws_iam_role" "github_actions" {
       {
         Effect = "Allow"
         Principal = {
-          Federated = aws_iam_openid_connect_provider.github_actions[0].arn
+          # Use the ARN from the data source if it exists.
+          # If not, use the ARN from the newly created resource (if it was created).
+          Federated = coalesce(data.aws_iam_openid_connect_provider.github_actions.arn, try(aws_iam_openid_connect_provider.github_actions[0].arn, null))
         }
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
