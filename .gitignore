@@ -60,7 +60,7 @@ crash.*.log
 
 # Exclude all .tfvars files, which likely contain sensitive data
 # You may want to include *.tfvars.example files for reference
-*.tfvars
+# *.tfvars
 *.tfvars.json
 !terraform.tfvars.example
 !*.tfvars.example
