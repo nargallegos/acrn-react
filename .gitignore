@@ -1,5 +1,297 @@
+# ============================================================================
+# .gitignore - Best Practices for React + Terraform + AWS Project
+# ============================================================================
+
+# ============================================================================
+# Node.js / React
+# ============================================================================
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Testing
+coverage/
+*.cover
+.nyc_output
+.grunt
+
+# Production builds
+build/
+dist/
+*.tgz
+
+# Misc
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ============================================================================
+# Terraform
+# ============================================================================
+
+# Local .terraform directories
+**/.terraform/*
+
+# Terraform state files - NEVER commit these!
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files, which likely contain sensitive data
+# You may want to include *.tfvars.example files for reference
+# *.tfvars
+*.tfvars.json
+!terraform.tfvars.example
+!*.tfvars.example
+
+# Ignore override files as they are usually used to override resources locally
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore Terraform CLI configuration files
+.terraformrc
+terraform.rc
+
+# Terraform plan output files
+*.tfplan
+*.tfplan.json
+plan.out
+terraform.plan
+
+# Terraform lock file (commit this in production, but some prefer to ignore)
+# Uncomment if you want to ignore the lock file
+# .terraform.lock.hcl
+
+# ============================================================================
+# AWS Credentials and Sensitive Files - CRITICAL!
+# ============================================================================
+
+# AWS credentials - NEVER commit these!
+*.pem
+*.key
+*.pub
+aws-credentials.json
+credentials
+.aws/
+*.p12
+*.pfx
+
+# Environment files with secrets
+.env.aws
+.env.production
+secrets/
+secret.*
+
+# Terraform backend configuration with credentials
+backend-config.hcl
+backend.tf.local
+
+# ============================================================================
+# IDE / Editor Files
+# ============================================================================
+
+# VSCode
+.vscode/*
+!.vscode/settings.json.example
+!.vscode/extensions.json
 .vscode/launch.json
 .vscode/tasks.json
-node_modules/
+.vscode/*.code-snippets
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.vim/
+.vimsession
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# JetBrains
+.idea/
+*.iml
+.idea_modules/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# ============================================================================
+# OS-specific Files
+# ============================================================================
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================================================
+# Docker
+# ============================================================================
+
+# Docker build artifacts
+.dockerignore.local
+docker-compose.override.yml
+.docker/
+
+# ============================================================================
+# Project-specific
+# ============================================================================
+
+# Personal notes (keep in .gitignore)
 TODO.md
+NOTES.md
 GEMINI.md
+SCRATCH.md
+
+# Local scripts
+local-*.sh
+*.local.sh
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+.cache/
+
+# Testing and debugging
+debug/
+test-output/
+
+# ============================================================================
+# Documentation (Optional - Remove if you want to commit these)
+# ============================================================================
+
+# Uncomment if you don't want to commit local documentation
+# docs/local/
+# *.draft.md
+
+# ============================================================================
+# CI/CD (Optional)
+# ============================================================================
+
+# Local CI/CD testing
+.gitlab-ci.local.yml
+.github/workflows/*.local.yml
+
+# ============================================================================
+# Sensitive Outputs
+# ============================================================================
+
+# Any file with "secret" or "private" in the name
+*secret*
+*private*
+*SECRET*
+*PRIVATE*
+
+# Output files that might contain sensitive data
+outputs.json
+terraform-outputs.json
+
+# ============================================================================
+# Archives
+# ============================================================================
+
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# ============================================================================
+# IMPORTANT REMINDERS
+# ============================================================================
+# 
+# ✅ Always review files before committing:
+#    git status
+#    git diff
+#
+# ✅ Never commit:
+#    - AWS credentials or access keys
+#    - Terraform state files
+#    - .tfvars files with sensitive data
+#    - Private keys or certificates
+#
+# ✅ Use git-secrets or similar tools to prevent credential leaks:
+#    https://github.com/awslabs/git-secrets
+#
+# ============================================================================
+
+# Project-specific ignores
+terraform/terraform.tfvars
+
+# Note: .terraform.lock.hcl SHOULD be committed for version consistency
+# It's already covered by the general pattern above, but explicitly NOT ignored here

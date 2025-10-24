@@ -1,0 +1,29 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowAssumeDeploymentRole",
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": [
+        "arn:aws:iam::YOUR_ACCOUNT_ID:role/acrn-react-terraform-deploy"
+      ]
+    },
+    {
+      "Sid": "ReadOnlyAccessForDebugging",
+      "Effect": "Allow",
+      "Action": [
+        "apprunner:DescribeService",
+        "apprunner:ListServices",
+        "route53:GetHostedZone",
+        "route53:ListHostedZones",
+        "ecr:DescribeImages",
+        "ecr:DescribeRepositories",
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+
