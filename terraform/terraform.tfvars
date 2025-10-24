@@ -4,9 +4,6 @@ app_name = "acrn"
 # The root domain that matches your Route 53 Hosted Zone
 domain_name = "cele.rocks"
 
-# The exact name of your service in the App Runner console
-apprunner_service_name = "ACRN-React"
-
 hosted_zone_id = "Z06796682YS2JSUKLK80G"
 
 # Security: External ID for role assumption

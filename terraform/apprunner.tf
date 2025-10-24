@@ -1,5 +1,5 @@
 resource "aws_apprunner_service" "acrn_app" {
-  service_name = var.apprunner_service_name
+  service_name = var.app_name
 
   source_configuration {
     authentication_configuration {

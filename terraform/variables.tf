@@ -15,11 +15,6 @@ variable "domain_name" {
   type        = string
 }
 
-variable "apprunner_service_name" {
-  description = "The name of the App Runner service instance"
-  type        = string
-}
-
 variable "hosted_zone_id" {
   description = "The Route56 hosted zone ID for the custom domain"
   type        = string
